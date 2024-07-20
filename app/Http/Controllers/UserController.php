@@ -14,7 +14,7 @@ class UserController extends Controller
     public function index()
     {
         $users = User::get();
-        return view('admin/users', compact('users'));
+        return view('admin.users', compact('users'));
     }
 
     /**
@@ -42,8 +42,7 @@ class UserController extends Controller
 
     // Handle the active field
     $data['active'] = isset($request->active);
-    // Hash the password
-   // $data['password'] = Hash::make($data['password']);
+  
 
     // Create the user
     User::create($data);
@@ -51,92 +50,38 @@ class UserController extends Controller
     // Redirect to the users list with a success message
     return redirect('/admin/users')->with('success', 'User added successfully.');
 }
-    // public function store(Request $request)
-    // {
-        
-    //    
-    //     $messages = $this->errMsg();
-
-    //     $data = $request->validate([
-    //         'name' => ['required', 'string', 'max:255'],
-    //         'username' => ['required', 'string', 'max:255', 'unique:users'],
-    //         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-    //         'password' => ['required', 'string', 'min:8',],
-    //     ], $messages);
 
 
-    //     User::create($data);
-    //     return redirect('users');
-    // }
+//     /**
+     //Show the form for editing the specified resource.
+     
+    public function edit(string $id)
+    {
+        $user =User::findOrFail($id);
+        return view('admin.editUser', compact('user'));
+    }
 
     /**
-     * Display the specified resource.
+     * Update the specified resource in storage.
      */
-//     public function show(string $id)
-//     {
-//         $user = User::findOrFail($id);
-//         return view('showUser', compact('users'));
-//     }
+    public function update(Request $request, string $id)
+    {
+        $messages = $this->errMsg();
+        $data = $request->validate([
+            'name' => 'required|max:100|min:5',
+            'username' => 'required|min:11',
+            'email' => 'required|email:rfc',
+            'password' => 'required',
+        ], $messages);
 
-//     /**
-//      * Show the form for editing the specified resource.
-//      */
-//     public function edit(string $id)
-//     {
-//         $user =User::findOrFail($id);
-//         return view('editUser', compact('user'));
-//     }
-
-//     /**
-//      * Update the specified resource in storage.
-//      */
-//     public function update(Request $request, string $id)
-//     {
-//         $messages = $this->errMsg();
-//         $data = $request->validate([
-//             'name' => 'required|max:100|min:5',
-//             'username' => 'required|min:11',
-//             'email' => 'required|email:rfc',
-//             'password' => 'required',
-//         ], $messages);
-
-//         if($request->hasFile('image')){
-//             $fileName = $this->upload($request->image, 'assets/images');
-//             $data['image'] = $fileName;
-//             // Storage - unlink
-//         }
+       
         
-//         $data['active'] = isset($request->active);
-//         User::where('id', $id)->update($data);
-//         return redirect('users');
-//     }
+        
+        $data['active'] = isset($request->active);
+        User::where('id', $id)->update($data);
+        return redirect('/admin/users');
+    }
 
-//     /**
-//      * Remove the specified resource from storage.
-//      */
-//     public function destroy(Request $request)
-//     {
-//         $id = $request->id;
-//        User::where('id',$id)->delete();
-//         return redirect('users');
-//     }
-
-    
-   
-//    public function trash()
-//    {
-//        $trashed = User::onlyTrashed()->get();
-//        return view('trashUser', compact('trashed'));
-//    }
-
-//    /**
-//     * Restore.
-//     */
-//    public function restore(string $id)
-//    {
-//       User::where('id',$id)->restore();
-//        return redirect('users');
-//    }
     public function errMsg(){
         return [
             'UserName.required' => 'The user name is missed, please insert',
