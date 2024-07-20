@@ -23,6 +23,7 @@ Route::post('register', [RegisterController::class, 'register']);
 
 
 
+
 });
 
 
@@ -30,13 +31,16 @@ Route::post('register', [RegisterController::class, 'register']);
 Auth::routes(['verify'=>true]);
 
 Route::get('home', [App\Http\Controllers\HomeController::class, 'index'])->middleware('verified')->name('home');
-Route::get('/admin/addUser',[UserController::class,'create'])->name('addUser');
 
+
+
+Route::get('/admin/addUser',[UserController::class,'create'])->name('addUser');
 Route::post('insertUser',[UserController::class,'store'])->name('insertUser');
-Route::get('addUser',[UserController::class,'create'])->name('addUser');
-Route::get('userss',[UserController::class,'index'])->middleware('verified')->name('users');
+Route::get('/admin/users',[UserController::class,'index'])->name('users');
+
 Route::get('editUser/{id}',[UserController::class,'edit'])->name('editUser');
 Route::put('updateUser/{id}',[UserController::class,'update'])->name('updateUser');
 Route::get('showUser/{id}',[UserController::class,'show'])->name('showUser');
 Route::delete('delUser',[UserController::class,'destroy'])->name('delUser');
 Route::get('restoreUser/{id}',[UserController::class,'restore'])->name('restoreUser');
+

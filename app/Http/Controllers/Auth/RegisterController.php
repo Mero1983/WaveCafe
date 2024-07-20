@@ -71,6 +71,7 @@ class RegisterController extends Controller
             'name' => $data['name'],
             'username' => $data['username'],
             'email' => $data['email'],
+            'active' => false, // Set default value for 'active' column
             'password' => Hash::make($data['password']),
         ]);
     }
