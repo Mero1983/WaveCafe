@@ -58,7 +58,7 @@ class UserController extends Controller
     public function edit(string $id)
     {
         $user =User::findOrFail($id);
-        return view('admin.editUser', compact('user'));
+        return view('admin/editUser', compact('user'));
     }
 
     /**
