@@ -13,6 +13,7 @@ class Beverage extends Model
     protected $fillable = [
         'title',
         'content',
+        'price',
         'published',
         'special', 
         'image',
@@ -20,7 +21,7 @@ class Beverage extends Model
  
 
     ];
-//  public function category(){
-//         return $this->belongsTo(Category::class);
-//     }
+ public function category(){
+        return $this->belongsTo(Category::class);
+    }
 }

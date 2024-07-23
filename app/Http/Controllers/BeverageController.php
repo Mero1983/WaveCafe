@@ -8,7 +8,6 @@ use App\Traits\UploadFile;
 class BeverageController extends Controller
 
 {
-    use UploadFile;
 
     /**
      * Display a listing of the resource.
@@ -16,7 +15,7 @@ class BeverageController extends Controller
     public function index()
     {
         $beverages = Beverage::get();
-        return view('admin.beverages', compact('beverage'));
+        return view('/admin/beverages', compact('beverage'));
     }
 
     /**
@@ -37,7 +36,7 @@ class BeverageController extends Controller
         $data = $request->validate([
             'content' => ['required', 'string', 'max:255'],
             'title' => ['required', 'string', 'max:255',],
-            'price' => ['required', 'integer', 'max:255'],
+            'price' => ['required', 'integer'],
             'category' => ['required', 'string', 'min:8'],
         ], $messages);
 
@@ -50,7 +49,7 @@ class BeverageController extends Controller
         $data['published'] = isset($request->published);
         $data['special'] = isset($request->special);
         Beverage::create($data);
-        return redirect('beverages');
+        return redirect('/admin/beverages');
     }
 
     /**
@@ -67,7 +66,7 @@ class BeverageController extends Controller
     public function edit(string $id)
     {
         $beverage =Beverage::findOrFail($id);
-        return view('admin.editBeverage', compact('beverage'));
+        return view('/admin/editBeverage', compact('beverage'));
     }
 
     /**
@@ -80,14 +79,14 @@ class BeverageController extends Controller
         $data = $request->validate([
             'content' => ['required', 'string', 'max:255'],
             'title' => ['required', 'string', 'max:255'],
-            'price' => ['required', 'integer', 'max:255'],
+            'price' => ['required', 'integer'],
             'image' => 'sometimes|image' ,  
               'category' => ['required', 'string'],
         ], $messages);
 
 
         if($request->hasFile('image')){
-            $fileName = $this->upload($request->image, 'assets/admin/images');
+            $fileName = $this->upload($request->image, 'assets/images');
             $data['image'] = $fileName;
         }
     
@@ -95,7 +94,7 @@ class BeverageController extends Controller
         $data['published'] = isset($request->published);
         $data['special'] = isset($request->special);
         Beverage::where('id', $id)->update($data);
-        return redirect('beverages');
+        return redirect('/admin/beverages');
     }
 
     /**
@@ -106,7 +105,7 @@ class BeverageController extends Controller
         {
             $id = $request->id;
             Beverage::where('id',$id)->delete();
-            return redirect('beverages');
+            return redirect('/admin/beverages');
         }
     }
     public function errMsg(){

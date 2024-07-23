@@ -13,15 +13,16 @@ return new class extends Migration
     {
         Schema::create('beverages', function (Blueprint $table) {
             $table->id();
+            $table->timestamps();
             $table->string('title');
             $table->string('content');
-            $table->integer('price');
+            $table->integer('price'); // Define the price column as an integer
             $table->boolean('published');
             $table->boolean('special');
-            $table->image('image');
-           // $table->foreignId('category_id')->constrained('categories');
+            $table->foreignId('category_id')->constrained('categories');          
+            $table->string('image');
             $table->softDeletes();
-            $table->timestamps();
+
         });
     }
 
