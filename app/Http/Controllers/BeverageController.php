@@ -1,30 +1,40 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Http\Request;
 use App\Models\Beverage;
+use App\Models\Category;
 use App\Traits\UploadFile;
+
 class BeverageController extends Controller
 
+
 {
+   
+   
+use UploadFile;
+
 
     /**
      * Display a listing of the resource.
      */
     public function index()
+    
     {
         $beverages = Beverage::get();
-        return view('/admin/beverages', compact('beverage'));
+        
+        return view('/admin/beverages', compact('beverages'));
+    }
+    public function create()
+    {
+        $categories = Category::all();
+        return view('/admin/addBeverage', compact('categories'));
     }
 
     /**
      * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('/admin/addBeverage');
-    }
+    //  */
+
 
     /**
      * Store a newly created resource in storage.
@@ -37,7 +47,7 @@ class BeverageController extends Controller
             'content' => ['required', 'string', 'max:255'],
             'title' => ['required', 'string', 'max:255',],
             'price' => ['required', 'integer'],
-            'category' => ['required', 'string', 'min:8'],
+            'category_id' => 'required|exists:categories,id',
         ], $messages);
 
         $fileName = $this->upload($request->image, 'assets/images');
@@ -65,8 +75,9 @@ class BeverageController extends Controller
      */
     public function edit(string $id)
     {
-        $beverage =Beverage::findOrFail($id);
-        return view('/admin/editBeverage', compact('beverage'));
+        $beverage = Beverage::findOrFail($id);
+        $categories = Category::all();
+        return view('/admin/editBeverage', compact('beverage', 'categories'));
     }
 
     /**
@@ -81,7 +92,7 @@ class BeverageController extends Controller
             'title' => ['required', 'string', 'max:255'],
             'price' => ['required', 'integer'],
             'image' => 'sometimes|image' ,  
-              'category' => ['required', 'string'],
+            'category_id' => 'required|exists:categories,id',
         ], $messages);
 
 
@@ -93,6 +104,7 @@ class BeverageController extends Controller
         // Handle the checkbox field
         $data['published'] = isset($request->published);
         $data['special'] = isset($request->special);
+
         Beverage::where('id', $id)->update($data);
         return redirect('/admin/beverages');
     }

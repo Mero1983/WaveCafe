@@ -24,4 +24,8 @@ class Beverage extends Model
  public function category(){
         return $this->belongsTo(Category::class);
     }
+    public function getFormattedCreatedAtAttribute()
+    {
+        return $this->created_at ? $this->created_at->format('Y-m-d H:i:s') : 'No date available';
+    }
 }

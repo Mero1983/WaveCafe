@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Traite;
+namespace App\Traits;
 
 trait uploadFile
 {

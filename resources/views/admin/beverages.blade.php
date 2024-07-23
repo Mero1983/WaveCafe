@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-   @include('dashincludes.headBeverage')
+   @include('dashincludes.headCategory')
   </head>
 
   <body class="nav-md">
@@ -31,7 +31,8 @@
             @include('dashincludes.menuFooter')
 
             <!-- /menu footer buttons -->
-         
+          </div>
+        </div>
 
         <!-- top navigation -->
         @include('dashincludes.topNavigation')
@@ -39,7 +40,7 @@
         <!-- /top navigation -->
 
         <!-- page content -->
-    @include('dashinclude.beverageTable')
+    @include('dashincludes.beverageTable')
         <!-- /page content -->
 
         <!-- footer content -->

@@ -56,29 +56,34 @@
 
 
                       <tbody>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('assets/admin/images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('assets/admin/images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('assets/admin/images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('assets/admin/images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        <tr>
-                          <td>1 Jan 2023</td>
-                          <td>Title</td>
-                          <td>Yes</td>
-                          <td><img src="{{asset('assets/admin/images/edit.png')}}" alt="Edit"></td>
-                          <td><img src="{{asset('assets/admin/images/delete.png')}}" alt="Delete"></td>
-                        </tr>
-                        
-                      </tbody>
+    @foreach ($beverages as $beverage)
+    <tr>
+        <td>
+            @if ($beverage->created_at)
+                {{ $beverage->created_at->format('d-m-Y H:i') }}
+            @else
+                No date available
+            @endif
+        </td>
+        <td>{{ $beverage->title }}</td>
+        <td>{{ $beverage->published ? 'Yes' : 'No' }}</td>
+        <td>
+            <a href="{{ route('editBeverage', $beverage->id) }}">
+                <img src="{{ asset('assets/admin/images/edit.png') }}" alt="Edit">
+            </a>
+        </td>
+        <td>
+            <form action="{{ route('delBeverage', $beverage->id) }}" method="POST" style="display:inline;">
+                @csrf
+                @method('DELETE')
+                <button type="submit" style="border:none; background:none; padding:0;">
+                    <img src="{{ asset('assets/admin/images/delete.png') }}" alt="Delete">
+                </button>
+            </form>
+        </td>
+    </tr>
+    @endforeach
+</tbody>
                     </table>
                   </div>
                   </div>
