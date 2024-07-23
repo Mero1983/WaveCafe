@@ -7,6 +7,7 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\BeverageController;
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\VerificationController;
 
 
@@ -65,3 +66,7 @@ Route::get('/admin/beverages',[BeverageController::class,'index'])->name('bevera
 Route::get('/admin/editBeverage/{id}',[BeverageController::class,'edit'])->name('editBeverage');
 Route::put('UpdateBeverage/{id}',[BeverageController::class,'update'])->name('updateBeverage');
 Route::delete('delBeverage/{id}',[BeverageController::class,'destroy'])->name('delBeverage');
+//contact
+
+Route::get('/includes/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
+Route::post('/includes/contact', [ContactController::class, 'sendContactMail'])->name('contact.send');
