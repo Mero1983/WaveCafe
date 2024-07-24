@@ -49,4 +49,6 @@ class LoginController extends Controller
     
         return redirect()->intended('/admin/addUser'); // Fallback to '/dashboard' if no intended URL exists
     }
+
+
 }

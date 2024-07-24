@@ -1,62 +1,60 @@
 @extends('layouts.app')
+
 @section('content')
-<body class="login">
-    <div class="login_wrapper">
-        <div class="animate form login_form">
-            <section class="login_content">
-                <form method="POST" action="{{ route('login') }}">
-                    @csrf
-                    <h1>Login Form</h1>
+<div class="login_wrapper">
+    <div class="animate form login_form">
+        <section class="login_content">
+            <form method="POST" action="{{ route('login') }}">
+                @csrf
+                <h1>Login Form</h1>
 
-                    <div>
-                        <input type="text" class="form-control{{ __('User Name') }} @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Username" required autocomplete="username" autofocus>
-                        @error('username')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                <div>
+                    <input type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" placeholder="Username" required autocomplete="username" autofocus>
+                    @error('username')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
 
-                    <div>
-                        <input type="password" class="form-control{{ __('Password') }} @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
+                <div>
+                    <input type="password" class="form-control @error('password') is-invalid @enderror" name="password" placeholder="Password" required autocomplete="current-password">
+                    @error('password')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
 
-                    <div>
-                        <button type="submit" class="btn btn-default submit"<a href="{{ route('login') }}?next=/specific-page">Login</a>
-{{ __('Login') }} ></button>
-                    </div>
+                <div>
+                    <button type="submit" class="btn btn-default submit">{{ __('Login') }}</button>
+                </div>
 
-                    <div>
-                        @if (Route::has('password.request'))
-                            <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
-                        @endif
-                    </div>
+                <div>
+                    @if (Route::has('password.request'))
+                        <a class="btn btn-link" href="{{ route('password.request') }}">{{ __('Forgot Your Password?') }}</a>
+                    @endif
+                </div>
+
+                <div class="clearfix"></div>
+
+                <div class="separator">
+                    <p class="change_link">New to site?
+                        <a href="{{ route('register') }}" class="to_register"> Create Account </a>
+                    </p>
 
                     <div class="clearfix"></div>
+                    <br />
 
-                    <div class="separator">
-                        <p class="change_link">New to site?
-                            <a href="{{ route('register') }}" class="to_register"> Create Account </a>
-                        </p>
-
-                        <div class="clearfix"></div>
-                        <br />
-
-                        <div>
-                            <h1><i class="fa fa-graduation-cap"></i> Beverages Admin</h1>
-                            <p>©2016 All Rights Reserved. Beverages Admin is a Bootstrap 4 template. Privacy and Terms</p>
-                        </div>
+                    <div>
+                        <h1><i class="fa fa-graduation-cap"></i> Beverages Admin</h1>
+                        <p>©2016 All Rights Reserved. Beverages Admin is a Bootstrap 4 template. Privacy and Terms</p>
                     </div>
-                </form>
-            </section>
-        </div>
+                </div>
+            </form>
+        </section>
     </div>
-</body>
+</div>
 @endsection
 
 <!-- @section('content')

@@ -8,6 +8,7 @@ use App\Mail\ContactMail;
 use App\Models\ContactMessage;
 
 
+
 class ContactController extends Controller
 {
     public function showContactForm()
@@ -31,12 +32,17 @@ class ContactController extends Controller
 
         return redirect()->back()->with('success', 'Your message has been sent successfully!');
     }
-}
 
-//     public function index()
-//     {
-//         //
-//     }
+
+   
+       
+        public function index()
+        {
+            $messages = ContactMessage::all();  // Use `all()` to retrieve all messages
+            return view('admin/messages', compact('messages'));
+        }
+       
+       
 
 //     /**
 //      * Show the form for creating a new resource.
@@ -57,10 +63,13 @@ class ContactController extends Controller
 //     /**
 //      * Display the specified resource.
 //      */
-//     public function show(string $id)
-//     {
-//         //
-//     }
+
+
+public function showMessage($id)
+{
+    $message = ContactMessage::findOrFail($id);
+    return view('admin/showMessage', compact('message')); // Note: 'message' not 'messages'
+}
 
 //     /**
 //      * Show the form for editing the specified resource.
@@ -81,8 +90,15 @@ class ContactController extends Controller
 //     /**
 //      * Remove the specified resource from storage.
 //      */
-//     public function destroy(string $id)
-//     {
-//         //
-//     }
-// }
+public function destroy($id)
+{
+    $message = ContactMessage::find($id);
+
+    if (!$message) {
+        return redirect()->route('admin/messages')->with('error', 'Message not found.');
+    }
+
+    $message->delete();
+    return redirect()->route('admin/messages')->with('success', 'Message deleted successfully.');
+}
+}

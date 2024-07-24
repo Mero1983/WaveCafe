@@ -9,6 +9,7 @@ use App\Http\Controllers\BeverageController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\Auth\VerificationController;
+use APP\Http\Controllers\MessageController;
 
 
 Route::get('/', function () {
@@ -70,3 +71,10 @@ Route::delete('delBeverage/{id}',[BeverageController::class,'destroy'])->name('d
 
 Route::get('/includes/contact', [ContactController::class, 'showContactForm'])->name('contact.form');
 Route::post('/includes/contact', [ContactController::class, 'sendContactMail'])->name('contact.send');
+
+//message
+Route::get('/admin/messages',[ContactController::class,'index'])->name('messages');
+Route::get('/admin/showMessage/{id}',[ContactController::class,'showMessage'])->name('showMessage');
+Route::delete('/admin/messages/{id}', [ContactController::class, 'destroy'])->name('destroyMessage');
+
+ 
